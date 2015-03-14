@@ -2,6 +2,7 @@ package com.speechshark.msmith.androidgameframe;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -9,7 +10,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
-	@Override
+	public static final boolean DEBUG= false;
+
+	public void DebugLog(String tag, String message){
+		Log.d(tag, message);
+	}
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);

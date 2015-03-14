@@ -3,6 +3,8 @@ package com.speechshark.msmith.androidgameframe;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
+
 /**
  * Created by Sherdon on 3/8/2015.
  */
@@ -30,7 +32,7 @@ public abstract class ImageObj {
 
 
 
-
+	public ImageObj(){}
     /** Superclass constructor for all images loaded into the game
      *
      * @param bitmap The image returned by BitmapFactory.decodeResource
@@ -39,6 +41,8 @@ public abstract class ImageObj {
      * @param xInitial The starting x coordinate value of the image
      * @param yInitial The starting y coordinate value of the image
      */
+
+
 
     //charactor constructor
     public ImageObj(Bitmap bitmap, Bitmap gameImageDestroy, int screenHeight, int screenWidth, int xInitial, int yInitial, int id, boolean isCollidable, boolean tracker, boolean objectDetection, boolean spawnState) {
