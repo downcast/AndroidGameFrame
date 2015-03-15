@@ -13,13 +13,11 @@ import java.util.List;
  */
 public class GameObj {
 
-	//private Hashtable<String, List<Container>> containerDict;
-
 	private int xLocation;
 	private int yLocation;
-	private Image displayedImage;
+	private Bitmap displayedBitmap;
 
-	private Hashtable<String, ArrayList<Image>> textureDict;
+	private Hashtable<String, ArrayList<Image>> textureHash;
 	// We may want to support other shapes later
 	private Rect containerBox;
 
@@ -47,7 +45,7 @@ public class GameObj {
 
 						ArrayList<Image> temp = new ArrayList<>();
 						temp.add(new Image(image));
-						this.textureDict.put(normalKey, temp);
+						this.textureHash.put(normalKey, temp);
 
 						if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.REPORT,
 								"Container - Container", "Container has been created with Rect"); }
@@ -63,15 +61,15 @@ public class GameObj {
 	}
 
 	public GameObj(Hashtable<String, ArrayList<Image>> texture) {
-		this.textureDict= texture;
+		this.textureHash= texture;
 	}
 
-	/** Draws the first Bitmap in the Image imageList with the normal key in the Container textureDict
+	/** Draws the first Bitmap in the Image imageList with the normal key in the Container textureHash
 	 * by default
 	 * @param canvas
 	 */
 	protected void draw(Canvas canvas){
-		canvas.drawBitmap(this.textureDict.get(textureKeys.NORMAL.name()).get(0).getImageList().get(0), this.xLocation,  this.yLocation, null);
+		canvas.drawBitmap(this.displayedBitmap, this.xLocation,  this.yLocation, null);
 	}
 
 	protected void absMove(){}
