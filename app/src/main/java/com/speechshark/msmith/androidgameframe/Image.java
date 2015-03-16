@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Marcus on 3/13/2015.
  */
-public class Image {
+public class Image{
 
 	private ArrayList<Bitmap> imageList;
 

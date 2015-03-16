@@ -8,7 +8,7 @@ import android.graphics.Rect;
 /**
  * Created by Sherdon on 3/8/2015.
  */
-public abstract class ImageObj {
+public class ImageObj {
     /** This is the actually image */
     protected Bitmap gameImage;
     protected Bitmap gameImageDestroy;
@@ -60,8 +60,10 @@ public abstract class ImageObj {
         this.objDetection= objectDetection;
         this.spawnstate = spawnState;
     }
-
-    //resources constructor
+    /*
+    //\\resources constructor
+    \\//
+    */
     public ImageObj(Bitmap bitmap, Bitmap gameImageDestroy, int screenHeight, int screenWidth, int xInitial, int yInitial, int id, boolean isCollidable, boolean tracker, boolean objectDetection, boolean spawnState, int shield, int increaseFireBallPower, int lightingBolt, int otherPowerUp1, int otherPowerUp2, int otherPowerUp3){
         this.gameImage= bitmap;
         this.gameImageDestroy = gameImageDestroy;
@@ -79,12 +81,17 @@ public abstract class ImageObj {
     }
 
     //******************************************Accessors******************************************/
-    /** Used to draw objects to the screen.
+
+    /**
+     * Used to draw objects to the screen.
      * <br>
      * Each image type will have its own version of the draw method.
+     *
      * @param canvas
      */
-    protected abstract void draw(Canvas canvas);
+    protected void draw(Canvas canvas) {
+
+    }
 
     protected void setGameImage(Bitmap gameImage) {
         this.gameImage = gameImage;

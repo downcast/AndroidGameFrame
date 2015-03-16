@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Marcus on 3/14/2015.
  */
-public class GameObj {
+public class GameObj{
 
 	private int xLocation;
 	private int yLocation;
