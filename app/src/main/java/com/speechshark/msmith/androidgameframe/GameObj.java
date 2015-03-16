@@ -1,6 +1,8 @@
 package com.speechshark.msmith.androidgameframe;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
@@ -13,51 +15,88 @@ import java.util.List;
  */
 public class GameObj{
 
+	/** The current x-axis location of the GameObj **/
 	private int xLocation;
+	/** The current y-axis location of the GameObj **/
 	private int yLocation;
+	/** The current image visible on the GameObj.
+	 * <br> This is used during the draw to represent the GameObj.  **/
 	private Bitmap displayedBitmap;
-
+	/** Holds all the images associated with the GameObj.
+	 * <br> Using a key such as "NORMAL" will give a list of all 'normal' images.
+	 * This is a way to organize several categories of images that a single GameObj should use
+	 */
 	private Hashtable<String, ArrayList<Image>> textureHash;
 	// We may want to support other shapes later
+	/** Represents the boundaries of the GameObj and gives it its edges.
+	 * <br> Adapts the boundaries according to the dimensions of the displayedBitmap
+	 */
 	private Rect containerBox;
 
+	/** Empty default constructor **/
+	public GameObj() {}
+
+	/** Initializes data and loads a default '?' bitmap into a new box. */
+	public GameObj(Context c)
+	{
+		this.xLocation= 0;
+		this.yLocation= 0;
+		this.textureHash= new Hashtable<>();
+
+		if (c != null) {
+			this.displayedBitmap= BitmapFactory.decodeResource(c.getResources(), R.drawable.ic_action_help);
+
+			ArrayList<Image> temp = new ArrayList<>();
+			temp.add(new Image(this.displayedBitmap));
+
+			this.textureHash.put(GameObjTextureKeys.DEFAULT.name(), temp);
+			this.containerBox= new Rect(this.xLocation, this.yLocation, this.displayedBitmap.getWidth(), this.displayedBitmap.getHeight());
+
+			if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.REPORT,
+					"GameObj - GameObj(Context)", "Default bitmap loaded; boundaries set"); }
+		} else {
+			// Creates a 1x1 boundary box
+			this.containerBox= new Rect(0,1,1,0);
+			if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.WARNING,
+					"GameObj - GameObj(Context)", "The context is NULL. Parameters disregarded; GameObj created with new Rect"); }
+		}
+	}
+
+	// Should take bitmap, can accept null box if boundaries should be wider
 	public GameObj(Rect box) {
 		if (box != null) {
 			if (!box.isEmpty()) {
 				this.containerBox = box;
 				if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.REPORT,
-						"Container - Container", "Container has been created with Rect"); }
+						"GameObj - GameObj(Rect)", "GameObj has been created with Rect"); }
 			} else if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.WARNING,
-					"Container - Container", "The box is EMPTY (Improper dimensions). Empty Container created"); }
+					"GameObj - GameObj(Rect)", "The box is EMPTY (Improper dimensions). Parameters disregarded; Empty GameObj created"); }
 		} else if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.WARNING,
-				"Container - Container", "The box is NULL. Empty Container created"); }
+				"GameObj - GameObj(Rect)", "The box is NULL.Parameters disregarded;  Empty GameObj created"); }
 	}
 
-	public GameObj(int left, int top, int right, int bottom){
-		this.containerBox= new Rect(left, top, right, bottom);
-	}
-
-	public GameObj(String normalKey, Bitmap image) {
-		if (normalKey != null) {
-			if (!normalKey.isEmpty()) {
+	//keep
+	public GameObj(String key, Bitmap image) {
+		if (key != null) {
+			if (!key.isEmpty()) {
 				if (image != null) {
 					if (!image.isRecycled()) {
 
 						ArrayList<Image> temp = new ArrayList<>();
 						temp.add(new Image(image));
-						this.textureHash.put(normalKey, temp);
+						this.textureHash.put(key, temp);
 
 						if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.REPORT,
-								"Container - Container", "Container has been created with Rect"); }
+								"GameObj - GameObj(String, Bitmap)", "GameObj has been created with Rect"); }
 					} else if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.WARNING,
-							"Container - Container", "The image is recycled (Reference to the pixel data has been cleared) " +
-									"Parameters disregarded; Empty Container created"); }
+							"GameObj - GameObj(String, Bitmap)", "The image is recycled (Reference to the pixel data has been cleared) " +
+									"Parameters disregarded; Empty GameObj created"); }
 				} else if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.WARNING,
-						"Container - Container", "The image is NULL. Parameters disregarded; Empty Container created"); }
+						"GameObj - GameObj(String, Bitmap)", "The image is NULL. Parameters disregarded; Empty GameObj created"); }
 			} else if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.WARNING,
-					"Container - Container", "The normalKey is EMPTY. Parameters disregarded; Empty Container created"); }
+					"GameObj - GameObj(String, Bitmap)", "The key is EMPTY. Parameters disregarded; Empty GameObj created"); }
 		} else if (DebugLogger.DEBUG) { DebugLogger.WriteLog(DebugLogger.DebugLoggerTagSeverity.WARNING,
-				"Container - Container", "The normalKey is NULL. Parameters disregarded; Empty Container created"); }
+				"GameObj - GameObj(String, Bitmap)", "The key is NULL. Parameters disregarded; Empty GameObj created"); }
 	}
 
 	public GameObj(Hashtable<String, ArrayList<Image>> texture) {
@@ -84,9 +123,10 @@ public class GameObj{
 
 	private void setyLocation(int yLocation) { this.yLocation = yLocation; }
 
-	private enum textureKeys{
+	private enum GameObjTextureKeys{
 		NORMAL,
-		DESTROY
+		DESTROY,
+		DEFAULT
 	}
 
 }
