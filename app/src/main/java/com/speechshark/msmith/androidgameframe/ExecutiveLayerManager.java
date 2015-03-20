@@ -10,7 +10,9 @@ public class ExecutiveLayerManager {
 	private Hashtable<LayerLevel, LayerManager> members;
 
 	/** Constructor that assigns the GameObj to the appropriate layer by sending to the appropriate manager  **/
-	public ExecutiveLayerManager(LayerLevel level, GameObj obj) { /*members.put(LayerLevel.ACTION, new LayerManager());*/ }
+	public ExecutiveLayerManager(LayerLevel level, GameObj obj) { /*members.put(LayerLevel.ACTION, new LayerManager());*/
+        members.put(LayerLevel.ACTION, new LayerManager());
+    }
 
 	public enum LayerLevel{
 		BACKGROUND,
