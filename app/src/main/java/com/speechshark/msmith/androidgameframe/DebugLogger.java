@@ -15,7 +15,7 @@ public class DebugLogger {
 	 * @param tag the "Class - method" that called
 	 * @param message the text describing what happened to warrant the message
 	 */
-	public static void WriteLog(DebugLoggerTagSeverity level, String tag, String message){
+	public static void WriteLog(TagSeverity level, String tag, String message){
 		if (DebugLogger.DEBUG) { Log.d(level.name() + " | " + tag, message); }
 	}
 
@@ -26,7 +26,7 @@ public class DebugLogger {
 	 * CRITICAL = Major Problem - a serious error that affects multiple dependent areas causing system instability. <br>
 	 * FAILURE = Worst Case - a critical error rendering the system unusable. <br>
 	 */
-	public enum DebugLoggerTagSeverity {
+	public static enum TagSeverity {
 		REPORT,
 		WARNING,
 		ERROR,
