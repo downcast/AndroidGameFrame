@@ -10,7 +10,7 @@ public class GameBrain {
 	int Clock;
 
 	/** Holds a list of all subscribers who will be told when to check for collisions */
-	//private ArrayList<Collision> listeners;
+	private ArrayList<OnCheckCollisionListener> listeners;
 
 
 }
